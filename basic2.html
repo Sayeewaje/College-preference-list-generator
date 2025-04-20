@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>College Predictor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: url('WhatsApp Image 2025-04-16 at 11.53.45 AM.jpeg') no-repeat center center/cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    .back {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #1976d2;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    .back:hover {
+      background: #1565c0;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.75);
+      padding: 30px;
+      border-radius: 10px;
+      color: white;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      margin-top: 80px;
+    }
+
+    .dropdowns label,
+    .dropdowns select {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .next {
+      background: #1976d2;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      margin: 20px;
+    }
+
+    .next:hover {
+      background: #1565c0;
+    }
+
+    #colleges-list {
+      margin-top: 20px;
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    #colleges-list ul {
+      list-style: none;
+    }
+
+    #colleges-list li {
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="back" onclick="goBack()">⬅ BACK</button>
+
+  <div class="container">
+    <h2>Enter Details</h2>
+    <div class="dropdowns">
+      <label for="percentile">Select CET Your Percentile:</label>
+      <select id="percentile">
+        <option value="100">100 - 99</option>
+        <option value="99">90 - 99</option>
+        <option value="89">80 - 89</option>
+        <option value="79">70 - 79</option>
+        <option value="69">60 - 69</option>
+        <option value="59">50 - 59</option>
+        <option value="49">40 - 49</option>
+        <option value="39">30 - 39</option>
+        <option value="29">20 - 29</option>
+        <option value="19">10 - 19</option>
+        <option value="9">Below 10</option>
+      </select>
+
+      <label for="location">Select Preferred Location:</label>
+      <select id="location">
+        <option value="Mumbai">Mumbai</option>
+        <option value="Pune">Pune</option>
+        <option value="Nashik">Nashik</option>
+        <option value="Nagpur">Nagpur</option>
+      </select>
+
+      <label for="branch">Select Preferred Branch:</label>
+      <select id="branch">
+        <option value="Computer Science">Computer Science</option>
+        <option value="Civil Engineering">Civil Engineering</option>
+        <option value="Mechanical Engineering">Mechanical Engineering</option>
+        <option value="Electrical Engineering">Electrical Engineering</option>
+        <option value="AI & DS">AI&DS</option>
+        <option value="Electronics and Telecommunication">Electronics & Telecommunication</option>
+        <option value="Information technology">Information technology</option>
+      </select>
+
+      <label for="category">Select Category:</label>
+      <select id="category">
+        <option value="General">General</option>
+        <option value="OBC">OBC</option>
+        <option value="SC">SC</option>
+        <option value="ST">ST</option>
+        <option value="EWS">EWS</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="next" onclick="generateCollegesList()">NEXT →</button>
+
+  <div id="colleges-list"></div>
+
+  <script>
+    function goBack() {
+      if (document.referrer && window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = "index1.html";
+      }
+    }
+
+    const collegesData = [
+    {"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Computer Science", "category": "General", "percentile": 99.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Computer Science", "category": "OBC", "percentile": 99.7},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Computer Science", "category": "SC", "percentile": 98.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Computer Science", "category": "ST", "percentile": 96.5},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Computer Science", "category": "EWS", "percentile": 99.2},
+
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Computer Science", "category": "General", "percentile": 98.5},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Computer Science", "category": "OBC", "percentile": 97.8},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Computer Science", "category": "SC", "percentile": 96.2},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Computer Science", "category": "ST", "percentile": 94.5},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Computer Science", "category": "EWS", "percentile": 98.0},
+{"name": "MIT World Peace University (MIT-WPU)", "location": "Pune", "branch": "Computer Science", "category": "General", "percentile": 97.0},
+
+{"name": "MIT World Peace University (MIT-WPU)", "location": "Pune", "branch": "Computer Science", "category": "OBC", "percentile": 96.5},
+{"name": "MIT World Peace University (MIT-WPU)", "location": "Pune", "branch": "Computer Science", "category": "SC", "percentile": 94.8},
+{"name": "MIT World Peace University (MIT-WPU)", "location": "Pune", "branch": "Computer Science", "category": "ST", "percentile": 93.2},
+{"name": "MIT World Peace University (MIT-WPU)", "location": "Pune", "branch": "Computer Science", "category": "EWS", "percentile": 96.7},
+
+{"name": "Fr. Conceicao Rodrigues College of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "General", "percentile": 87.15},
+{"name": "Fr. Conceicao Rodrigues College of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 85.00},
+{"name": "Fr. Conceicao Rodrigues College of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "SC", "percentile": 75.00},
+{"name": "Fr. Conceicao Rodrigues College of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "ST", "percentile": 70.00},
+
+{"name": "Terna Engineering College", "location": "Mumbai", "branch": "Information Technology", "category": "General", "percentile": 84.13},
+{"name": "Terna Engineering College", "location": "Mumbai", "branch": "Information Technology", "category": "OBC", "percentile": 82.50},
+{"name": "Terna Engineering College", "location": "Mumbai", "branch": "Information Technology", "category": "SC", "percentile": 72.00},
+{"name": "Terna Engineering College", "location": "Mumbai", "branch": "Information Technology", "category": "ST", "percentile": 68.00},
+
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "General", "percentile": 91.87},
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "OBC", "percentile": 90.00},
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "SC", "percentile": 80.00},
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "ST", "percentile": 75.00},
+
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "General", "percentile": 91.87},
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "OBC", "percentile": 90.00},
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "SC", "percentile": 80.00},
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "ST", "percentile": 75.00},
+
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "General", "percentile": 89.5},
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "OBC", "percentile": 88.0},
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "SC", "percentile": 85.5},
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "ST", "percentile": 83.0},
+{"name": "AISSMS College of Engineering", "location": "Pune", "branch": "Computer Science", "category": "EWS", "percentile": 88.5},
+
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Computer Science", "category": "General", "percentile": 95.5},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Computer Science", "category": "OBC", "percentile": 94.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Computer Science", "category": "SC", "percentile": 92.5},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Computer Science", "category": "ST", "percentile": 90.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Computer Science", "category": "EWS", "percentile": 94.2},
+
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Computer Science", "category": "General", "percentile": 55.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Computer Science", "category": "OBC", "percentile": 53.5},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Computer Science", "category": "SC", "percentile": 50.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Computer Science", "category": "ST", "percentile": 47.5},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Computer Science", "category": "EWS", "percentile": 54.2},
+
+{"name": "JSPM Jaywantrao Sawant College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 86.97},
+{"name": "JSPM Jaywantrao Sawant College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 84.00},
+{"name": "JSPM Jaywantrao Sawant College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 74.00},
+{"name": "JSPM Jaywantrao Sawant College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 70.0},
+
+{"name": "JSPM Jaywantrao Sawant College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 86.97},
+{"name": "JSPM Jaywantrao Sawant College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 84.00},
+{"name": "JSPM Jaywantrao Sawant College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 74.00},
+{"name": "JSPM Jaywantrao Sawant College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 70.0},
+
+
+
+{"name": "Veermata Jijabai Technological Institute (VJTI)", "location": "Mumbai", "branch": "Computer Science", "category": "General", "percentile": 99.8},
+{"name": "Veermata Jijabai Technological Institute (VJTI)", "location": "Mumbai", "branch": "Computer Science", "category": "OBC", "percentile": 99.4},
+{"name": "Veermata Jijabai Technological Institute (VJTI)", "location": "Mumbai", "branch": "Computer Science", "category": "SC", "percentile": 97.2},
+{"name": "Veermata Jijabai Technological Institute (VJTI)", "location": "Mumbai", "branch": "Computer Science", "category": "ST", "percentile": 95.5},
+{"name": "Veermata Jijabai Technological Institute (VJTI)", "location": "Mumbai", "branch": "Computer Science", "category": "EWS", "percentile": 99.1},
+
+{"name": "Sardar Patel Institute of Technology (SPIT)", "location": "Mumbai", "branch": "Computer Science", "category": "General", "percentile": 98.0},
+{"name": "Sardar Patel Institute of Technology (SPIT)", "location": "Mumbai", "branch": "Computer Science", "category": "OBC", "percentile": 97.5},
+{"name": "Sardar Patel Institute of Technology (SPIT)", "location": "Mumbai", "branch": "Computer Science", "category": "SC", "percentile": 96.0},
+{"name": "Sardar Patel Institute of Technology (SPIT)", "location": "Mumbai", "branch": "Computer Science", "category": "ST", "percentile": 94.2},
+{"name": "Sardar Patel Institute of Technology (SPIT)", "location": "Mumbai", "branch": "Computer Science", "category": "EWS", "percentile": 97.8},
+
+
+{"name": "Xavier Institute of Engineering", "location": "Mumbai", "branch": "Computer Science", "category": "General", "percentile": 58.5},
+{"name": "Xavier Institute of Engineering", "location": "Mumbai", "branch": "Computer Science", "category": "OBC", "percentile": 57.0},
+{"name": "Xavier Institute of Engineering", "location": "Mumbai", "branch": "Computer Science", "category": "SC", "percentile": 54.5},
+{"name": "Xavier Institute of Engineering", "location": "Mumbai", "branch": "Computer Science", "category": "ST", "percentile": 52.0},
+{"name": "Xavier Institute of Engineering", "location": "Mumbai", "branch": "Computer Science", "category": "EWS", "percentile": 57.8},
+
+{"name": "Thakur College of Engineering", "location": "Mumbai", "branch": "Computer Science", "category": "General", "percentile": 56.0},
+{"name": "Thakur College of Engineering", "location": "Mumbai", "branch": "Computer Science", "category": "OBC", "percentile": 54.5},
+{"name": "Thakur College of Engineering", "location": "Mumbai", "branch": "Computer Science", "category": "SC", "percentile": 51.0},
+{"name": "Thakur College of Engineering", "location": "Mumbai", "branch": "Computer Science", "category": "ST", "percentile": 48.5},
+{"name": "Thakur College of Engineering", "location": "Mumbai", "branch": "Computer Science", "category": "EWS", "percentile": 55.2},
+
+{"name": "Don Bosco Institute of Technology", "location": "Mumbai", "branch": "Computer Science", "category": "General", "percentile": 54.5},
+{"name": "Don Bosco Institute of Technology", "location": "Mumbai", "branch": "Computer Science", "category": "OBC", "percentile": 53.0},
+{"name": "Don Bosco Institute of Technology", "location": "Mumbai", "branch": "Computer Science", "category": "SC", "percentile": 50.0},
+{"name": "Don Bosco Institute of Technology", "location": "Mumbai", "branch": "Computer Science", "category": "ST", "percentile": 47.5},
+{"name": "Don Bosco Institute of Technology", "location": "Mumbai", "branch": "Computer Science", "category": "EWS", "percentile": 53.8},
+
+
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Computer Science", "category": "General", "percentile": 94.0},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Computer Science", "category": "OBC", "percentile": 93.5},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Computer Science", "category": "SC", "percentile": 92.0},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Computer Science", "category": "ST", "percentile": 90.5},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Computer Science", "category": "EWS", "percentile": 93.8},
+
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Computer Science", "category": "General", "percentile": 92.0},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Computer Science", "category": "OBC", "percentile": 91.5},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Computer Science", "category": "SC", "percentile": 90.0},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Computer Science", "category": "ST", "percentile": 88.5},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Computer Science", "category": "EWS", "percentile": 91.2},
+
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Computer Science", "category": "General", "percentile": 90.91},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 85.34},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Information technology", "category": "General", "percentile": 85.3},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Computer Science", "category": "OBC", "percentile": 83.91},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 55.44},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Information technology", "category": "OBC", "percentile": 79.10},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Computer Science", "category": "SC", "percentile": 79.10},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Mechanical Engineering", "category": "SC", "percentile": 40.20},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Information technology", "category": "SC", "percentile": 79.90},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Computer Science", "category": "ST", "percentile": 63.10},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Mechanical Engineering", "category": "ST", "percentile": 45.98},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Information technology", "category": "ST", "percentile": 32.78},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Computer Science", "category": "EWS", "percentile": 67.89},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 57.98},
+{"name": "MVPS KBTCOE", "location": "Nashik", "branch": "Information technology", "category": "EWS", "percentile": 85.19},
+
+{"name": "KK Wagh Institute of Engineering Education and Research", "location": "Nashik", "branch": "AI&DS", "category": "General", "percentile": 84.02},
+{"name": "KK Wagh Institute of Engineering Education and Research", "location": "Nashik", "branch": "AI&DS", "category": "OBC", "percentile": 82.00},
+{"name": "KK Wagh Institute of Engineering Education and Research", "location": "Nashik", "branch": "AI&DS", "category": "SC", "percentile": 72.00},
+{"name": "KK Wagh Institute of Engineering Education and Research", "location": "Nashik", "branch": "AI&DS", "category": "ST", "percentile": 68.00},
+
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Computer Science", "category": "General", "percentile": 83.00},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Computer Science", "category": "OBC", "percentile": 81.00},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Computer Science", "category": "SC", "percentile": 71.00},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Computer Science", "category": "ST", "percentile": 67.00},
+
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 88.0},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 86.5},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Mechanical Engineering", "category": "SC", "percentile": 83.0},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Mechanical Engineering", "category": "ST", "percentile": 80.5},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 87.2},
+
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 85.5},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 74.0},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 61.0},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 68.5},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 54.2},
+
+
+
+
+{"name": "Visvesvaraya National Institute of Technology (VNIT)", "location": "Nagpur", "branch": "Computer Science", "category": "General", "percentile": 99.0},
+{"name": "Visvesvaraya National Institute of Technology (VNIT)", "location": "Nagpur", "branch": "Computer Science", "category": "OBC", "percentile": 98.5},
+{"name": "Visvesvaraya National Institute of Technology (VNIT)", "location": "Nagpur", "branch": "Computer Science", "category": "SC", "percentile": 97.0},
+{"name": "Visvesvaraya National Institute of Technology (VNIT)", "location": "Nagpur", "branch": "Computer Science", "category": "ST", "percentile": 95.5},
+{"name": "Visvesvaraya National Institute of Technology (VNIT)", "location": "Nagpur", "branch": "Computer Science", "category": "EWS", "percentile": 98.8},
+
+{"name": "G.H. Raisoni College of Engineering (GHRCE)", "location": "Nagpur", "branch": "Computer Science", "category": "General", "percentile": 95.0},
+{"name": "G.H. Raisoni College of Engineering (GHRCE)", "location": "Nagpur", "branch": "Computer Science", "category": "OBC", "percentile": 94.5},
+{"name": "G.H. Raisoni College of Engineering (GHRCE)", "location": "Nagpur", "branch": "Computer Science", "category": "SC", "percentile": 93.0},
+{"name": "G.H. Raisoni College of Engineering (GHRCE)", "location": "Nagpur", "branch": "Computer Science", "category": "ST", "percentile": 91.5},
+{"name": "G.H. Raisoni College of Engineering (GHRCE)", "location": "Nagpur", "branch": "Computer Science", "category": "EWS", "percentile": 94.2},
+
+{"name": "GH Raisoni College of Engineering", "location": "Nagpur", "branch": "Computer Science", "category": "General", "percentile": 87.19},
+{"name": "GH Raisoni College of Engineering", "location": "Nagpur", "branch": "Computer Science", "category": "OBC", "percentile": 85.00},
+{"name": "GH Raisoni College of Engineering", "location": "Nagpur", "branch": "Computer Science", "category": "SC", "percentile": 75.00},
+{"name": "GH Raisoni College of Engineering", "location": "Nagpur", "branch": "Computer Science", "category": "ST", "percentile": 70.00},
+{"name": "Priyadarshini JL College of Engineering", "location": "Nagpur", "branch": "AI& DS", "category": "General", "percentile": 76.82},
+
+{"name": "Priyadarshini JL College of Engineering", "location": "Nagpur", "branch": "AI& DS", "category": "OBC", "percentile": 74.00},
+{"name": "Priyadarshini JL College of Engineering", "location": "Nagpur", "branch": "AI& DS", "category": "SC", "percentile": 65.00},
+{"name": "Priyadarshini JL College of Engineering", "location": "Nagpur", "branch": "AI& DS", "category": "ST", "percentile": 60.00},
+
+
+{"name": "Priyadarshini Institute of Engineering & Technology", "location": "Nagpur", "branch": "Computer Science", "category": "General", "percentile": 73.5},
+{"name": "Priyadarshini Institute of Engineering & Technology", "location": "Nagpur", "branch": "Computer Science", "category": "OBC", "percentile": 62.0},
+{"name": "Priyadarshini Institute of Engineering & Technology", "location": "Nagpur", "branch": "Computer Science", "category": "SC", "percentile": 59.0},
+{"name": "Priyadarshini Institute of Engineering & Technology", "location": "Nagpur", "branch": "Computer Science", "category": "ST", "percentile": 46.5},
+{"name": "Priyadarshini Institute of Engineering & Technology", "location": "Nagpur", "branch": "Computer Science", "category": "EWS", "percentile": 52.8},
+
+{"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 50.5},
+{"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 49.0},
+{"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 46.5},
+{"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 44.0},
+{"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 48.8},
+
+
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Computer Science", "category": "General", "percentile": 69.5},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Computer Science", "category": "OBC", "percentile": 68.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Computer Science", "category": "SC", "percentile": 65.5},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Computer Science", "category": "ST", "percentile": 63.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Computer Science", "category": "EWS", "percentile": 68.5},
+{"name": "D.Y. Patil College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 87.5},
+{"name": "D.Y. Patil College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 65.0},
+{"name": "D.Y. Patil College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 62.5},
+{"name": "D.Y. Patil College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 50.0},
+{"name": "D.Y. Patil College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 76.2},
+{"name": "MIT School of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "General", "percentile": 55.0},
+{"name": "MIT School of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 43.5},
+{"name": "MIT School of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "SC", "percentile": 40.0},
+{"name": "MIT School of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "ST", "percentile": 17.5},
+{"name": "MIT School of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 24.2},
+{"name": "Vidyalankar Institute of Technology", "location": "Mumbai", "branch": "Computer Science", "category": "General", "percentile": 58.5},
+{"name": "Vidyalankar Institute of Technology", "location": "Mumbai", "branch": "Computer Science", "category": "OBC", "percentile": 57.0},
+{"name": "Vidyalankar Institute of Technology", "location": "Mumbai", "branch": "Computer Science", "category": "SC", "percentile": 54.5},
+{"name": "Vidyalankar Institute of Technology", "location": "Mumbai", "branch": "Computer Science", "category": "ST", "percentile": 52.0},
+{"name": "Vidyalankar Institute of Technology", "location": "Mumbai", "branch": "Computer Science", "category": "EWS", "percentile": 57.8},
+{"name": "Rajiv Gandhi Institute of Technology", "location": "Mumbai", "branch": "Information Technology", "category": "General", "percentile": 66.0},
+{"name": "Rajiv Gandhi Institute of Technology", "location": "Mumbai", "branch": "Information Technology", "category": "OBC", "percentile": 64.5},
+{"name": "Rajiv Gandhi Institute of Technology", "location": "Mumbai", "branch": "Information Technology", "category": "SC", "percentile": 61.0},
+{"name": "Rajiv Gandhi Institute of Technology", "location": "Mumbai", "branch": "Information Technology", "category": "ST", "percentile": 51.5},
+{"name": "Rajiv Gandhi Institute of Technology", "location": "Mumbai", "branch": "Information Technology", "category": "EWS", "percentile": 55.2},
+{"name": "St. Francis Institute of Technology", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 44.5},
+{"name": "St. Francis Institute of Technology", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 43.0},
+{"name": "St. Francis Institute of Technology", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 30.0},
+{"name": "St. Francis Institute of Technology", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 37.5},
+{"name": "St. Francis Institute of Technology", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 33.8},
+{"name": "Sandip Institute of Technology", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 78.0},
+{"name": "Sandip Institute of Technology", "location": "Nashik", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 76.5},
+{"name": "Sandip Institute of Technology", "location": "Nashik", "branch": "Mechanical Engineering", "category": "SC", "percentile": 63.0},
+{"name": "Sandip Institute of Technology", "location": "Nashik", "branch": "Mechanical Engineering", "category": "ST", "percentile": 60.5},
+{"name": "Sandip Institute of Technology", "location": "Nashik", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 74.2},
+{"name": "KK Wagh Polytechnic", "location": "Nashik", "branch": "Civil Engineering", "category": "General", "percentile": 45.5},
+{"name": "KK Wagh Polytechnic", "location": "Nashik", "branch": "Civil Engineering", "category": "OBC", "percentile": 34.0},
+{"name": "KK Wagh Polytechnic", "location": "Nashik", "branch": "Civil Engineering", "category": "SC", "percentile": 31.0},
+{"name": "KK Wagh Polytechnic", "location": "Nashik", "branch": "Civil Engineering", "category": "ST", "percentile": 38.5},
+{"name": "KK Wagh Polytechnic", "location": "Nashik", "branch": "Civil Engineering", "category": "EWS", "percentile": 34.2},
+{"name": "Shri Ramdeobaba College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 23.5},
+{"name": "Shri Ramdeobaba College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 22.0},
+{"name": "Shri Ramdeobaba College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 19.0},
+{"name": "Shri Ramdeobaba College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 16.5},
+{"name": "Shri Ramdeobaba College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 22.8},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 21.5},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 20.0},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 17.5},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 15.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 96.03},
+{"name": "Bharati Vidyapeeth College of Engineering for Women", "location": "Pune", "branch": "Electronics & Telecommunication Engineering", "category": "General", "percentile": 70.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Civil Engineering", "category": "General", "percentile": 95.7},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Civil Engineering", "category": "General", "percentile": 85.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Civil Engineering", "category": "General", "percentile": 75.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Civil Engineering", "category": "General", "percentile": 65.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Civil Engineering", "category": "SC", "percentile": 88.5},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Civil Engineering", "category": "SC", "percentile": 75.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Civil Engineering", "category": "SC", "percentile": 68.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Civil Engineering", "category": "SC", "percentile": 60.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Civil Engineering", "category": "ST", "percentile": 82.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Civil Engineering", "category": "ST", "percentile": 70.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Civil Engineering", "category": "ST", "percentile": 62.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Civil Engineering", "category": "ST", "percentile": 55.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Civil Engineering", "category": "OBC", "percentile": 94.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Civil Engineering", "category": "OBC", "percentile": 83.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Civil Engineering", "category": "OBC", "percentile": 73.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Civil Engineering", "category": "OBC", "percentile": 64.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Civil Engineering", "category": "EWS", "percentile": 95.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Civil Engineering", "category": "EWS", "percentile": 84.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Civil Engineering", "category": "EWS", "percentile": 74.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Civil Engineering", "category": "EWS", "percentile": 65.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Mechanical Engineering", "category": "SC", "percentile": 87.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Mechanical Engineering", "category": "SC", "percentile": 74.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Mechanical Engineering", "category": "SC", "percentile": 66.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Mechanical Engineering", "category": "SC", "percentile": 58.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Mechanical Engineering", "category": "ST", "percentile": 81.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Mechanical Engineering", "category": "ST", "percentile": 69.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Mechanical Engineering", "category": "ST", "percentile": 60.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Mechanical Engineering", "category": "ST", "percentile": 53.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 92.5},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 81.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 72.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 63.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 94.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 83.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 73.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 64.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Mechanical Engineering", "category": "SC", "percentile": 50.0},
+{"name": "Zeal College of Engineering and Research", "location": "Pune", "branch": "Mechanical Engineering", "category": "SC", "percentile": 40.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Mechanical Engineering", "category": "SC", "percentile": 30.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "SC", "percentile": 20.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "SC", "percentile": 10.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Mechanical Engineering", "category": "ST", "percentile": 48.0},
+{"name": "Zeal College of Engineering and Research", "location": "Pune", "branch": "Mechanical Engineering", "category": "ST", "percentile": 38.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Mechanical Engineering", "category": "ST", "percentile": 28.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "ST", "percentile": 18.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "ST", "percentile": 10.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 50.0},
+{"name": "Zeal College of Engineering and Research", "location": "Pune", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 40.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 30.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 20.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 10.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 50.0},
+{"name": "Zeal College of Engineering and Research", "location": "Pune", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 40.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 30.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 20.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 10.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Mechanical Engineering", "category": "General", "percentile": 50.0},
+{"name": "Zeal College of Engineering and Research", "location": "Pune", "branch": "Mechanical Engineering", "category": "General", "percentile": 40.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Mechanical Engineering", "category": "General", "percentile": 30.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "General", "percentile": 20.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "Mechanical Engineering", "category": "General", "percentile": 10.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Electrical Engineering", "category": "General", "percentile": 98.5},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Electrical Engineering", "category": "General", "percentile": 89.0},
+{"name": "Pune Institute of Computer Technology (PICT)", "location": "Pune", "branch": "Electrical Engineering", "category": "General", "percentile": 89.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Electrical Engineering", "category": "General", "percentile": 68.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Electrical Engineering", "category": "General", "percentile": 58.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Electrical Engineering", "category": "General", "percentile": 95.0},
+{"name": "Zeal College of Engineering and Research", "location": "Pune", "branch": "Electrical Engineering", "category": "General", "percentile": 38.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Electrical Engineering", "category": "General", "percentile": 28.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Electrical Engineering", "category": "General", "percentile": 18.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "Electrical Engineering", "category": "General", "percentile": 10.0},
+
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Electrical Engineering", "category": "ST", "percentile": 82.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Electrical Engineering", "category": "ST", "percentile": 70.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Electrical Engineering", "category": "ST", "percentile": 58.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Electrical Engineering", "category": "ST", "percentile": 48.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Electrical Engineering", "category": "ST", "percentile": 38.0},
+{"name": "Zeal College of Engineering and Research", "location": "Pune", "branch": "Electrical Engineering", "category": "ST", "percentile": 28.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Electrical Engineering", "category": "ST", "percentile": 20.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Electrical Engineering", "category": "ST", "percentile": 14.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "Electrical Engineering", "category": "ST", "percentile": 10.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Electrical Engineering", "category": "OBC", "percentile": 94.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Electrical Engineering", "category": "OBC", "percentile": 84.0},
+{"name": "Pune Institute of Computer Technology (PICT)", "location": "Pune", "branch": "Electrical Engineering", "category": "OBC", "percentile": 73.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Electrical Engineering", "category": "OBC", "percentile": 63.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Electrical Engineering", "category": "OBC", "percentile": 52.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Electrical Engineering", "category": "OBC", "percentile": 42.0},
+{"name": "Zeal College of Engineering and Research", "location": "Pune", "branch": "Electrical Engineering", "category": "OBC", "percentile": 32.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Electrical Engineering", "category": "OBC", "percentile": 52.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Electrical Engineering", "category": "OBC", "percentile": 14.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "Electrical Engineering", "category": "OBC", "percentile": 10.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Electrical Engineering", "category": "EWS", "percentile": 95.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Electrical Engineering", "category": "EWS", "percentile": 85.0},
+{"name": "Pune Institute of Computer Technology (PICT)", "location": "Pune", "branch": "Electrical Engineering", "category": "EWS", "percentile": 75.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Electrical Engineering", "category": "EWS", "percentile": 65.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Electrical Engineering", "category": "EWS", "percentile": 55.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Electrical Engineering", "category": "EWS", "percentile": 85.0},
+{"name": "Zeal College of Engineering and Research", "location": "Pune", "branch": "Electrical Engineering", "category": "EWS", "percentile": 35.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Electrical Engineering", "category": "EWS", "percentile": 25.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Electrical Engineering", "category": "EWS", "percentile": 16.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "Electrical Engineering", "category": "EWS", "percentile": 10.0},
+{"name": "Pune Institute of Computer Technology (PICT)", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 99.2},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 91.0},
+{"name": "Bharati Vidyapeeth College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 82.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 72.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 62.0},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 52.0},
+{"name": "Zeal College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 42.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 30.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 20.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "Information Technology", "category": "General", "percentile": 10.0},
+{"name": "PICT", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 85.0},
+{"name": "VIT", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 75.0},
+{"name": "BVP", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 65.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 55.0},
+{"name": "MITAOE", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 45.0},
+{"name": "PCCOE", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 35.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 25.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 18.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 12.0},
+{"name": "RSCOE", "location": "Pune", "branch": "Information Technology", "category": "SC", "percentile": 10.0},
+{"name": "PICT", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 80.0},
+{"name": "VIT", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 70.0},
+{"name": "BVP", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 60.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 50.0},
+{"name": "MITAOE", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 40.0},
+{"name": "PCCOE", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 30.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 22.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 15.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 11.0},
+{"name": "RSCOE", "location": "Pune", "branch": "Information Technology", "category": "ST", "percentile": 10.0},
+{"name": "PICT", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 96.0},
+{"name": "VIT", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 86.0},
+{"name": "BVP", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 76.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 66.0},
+{"name": "MITAOE", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 56.0},
+{"name": "PCCOE", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 86.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 36.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 26.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 16.0},
+{"name": "RSCOE", "location": "Pune", "branch": "Information Technology", "category": "OBC", "percentile": 10.0},
+{"name": "PICT", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 97.0},
+{"name": "VIT", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 94.0},
+{"name": "BVP", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 77.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 67.0},
+{"name": "MITAOE", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 57.0},
+{"name": "PCCOE", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 47.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 37.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 27.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 17.0},
+{"name": "RSCOE", "location": "Pune", "branch": "Information Technology", "category": "EWS", "percentile": 10.0},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "AI&DS", "category": "General", "percentile": 98.8},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "AI&DS", "category": "General", "percentile": 89.0},
+{"name": "Bharati Vidyapeeth College of Engineering", "location": "Pune", "branch": "AI&DS", "category": "General", "percentile": 79.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "AI&DS", "category": "General", "percentile": 69.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "AI&DS", "category": "General", "percentile": 59.0},
+{"name": "Zeal College of Engineering", "location": "Pune", "branch": "AI&DS", "category": "General", "percentile": 49.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "AI&DS", "category": "General", "percentile": 39.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "AI&DS", "category": "General", "percentile": 28.0},
+{"name": "RSCOE - JSPM's Rajarshi Shahu College of Engineering", "location": "Pune", "branch": "AI&DS", "category": "General", "percentile": 18.0},
+{"name": "ISB&M College of Engineering", "location": "Pune", "branch": "AI&DS", "category": "General", "percentile": 10.0},
+{"name": "VIT", "location": "Pune", "branch": "AI&DS", "category": "SC", "percentile": 83.0},
+{"name": "PCCOE", "location": "Pune", "branch": "AI&DS", "category": "SC", "percentile": 73.0},
+{"name": "BVP", "location": "Pune", "branch": "AI&DS", "category": "SC", "percentile": 63.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "AI&DS", "category": "SC", "percentile": 53.0},
+{"name": "MITAOE", "location": "Pune", "branch": "AI&DS", "category": "SC", "percentile": 43.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "AI&DS", "category": "SC", "percentile": 33.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "AI&DS", "category": "SC", "percentile": 23.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "AI&DS", "category": "SC", "percentile": 15.0},
+{"name": "RSCOE", "location": "Pune", "branch": "AI&DS", "category": "SC", "percentile": 11.0},
+{"name": "ISB&M COE", "location": "Pune", "branch": "AI&DS", "category": "SC", "percentile": 10.0},
+{"name": "VIT", "location": "Pune", "branch": "AI&DS", "category": "ST", "percentile": 79.0},
+{"name": "PCCOE", "location": "Pune", "branch": "AI&DS", "category": "ST", "percentile": 69.0},
+{"name": "BVP", "location": "Pune", "branch": "AI&DS", "category": "ST", "percentile": 59.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "AI&DS", "category": "ST", "percentile": 49.0},
+{"name": "MITAOE", "location": "Pune", "branch": "AI&DS", "category": "ST", "percentile": 39.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "AI&DS", "category": "ST", "percentile": 29.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "AI&DS", "category": "ST", "percentile": 20.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "AI&DS", "category": "ST", "percentile": 14.0},
+{"name": "RSCOE", "location": "Pune", "branch": "AI&DS", "category": "ST", "percentile": 10.5},
+{"name": "ISB&M COE", "location": "Pune", "branch": "AI&DS", "category": "ST", "percentile": 10.0},
+{"name": "VIT", "location": "Pune", "branch": "AI&DS", "category": "OBC", "percentile": 95.0},
+{"name": "PCCOE", "location": "Pune", "branch": "AI&DS", "category": "OBC", "percentile": 85.0},
+{"name": "BVP", "location": "Pune", "branch": "AI&DS", "category": "OBC", "percentile": 75.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "AI&DS", "category": "OBC", "percentile": 65.0},
+{"name": "MITAOE", "location": "Pune", "branch": "AI&DS", "category": "OBC", "percentile": 55.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "AI&DS", "category": "OBC", "percentile": 45.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "AI&DS", "category": "OBC", "percentile": 35.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "AI&DS", "category": "OBC", "percentile": 25.0},
+{"name": "RSCOE", "location": "Pune", "branch": "AI&DS", "category": "OBC", "percentile": 15.0},
+{"name": "ISB&M COE", "location": "Pune", "branch": "AI&DS", "category": "OBC", "percentile": 10.0},
+{"name": "VIT", "location": "Pune", "branch": "AI&DS", "category": "EWS", "percentile": 96.0},
+{"name": "PCCOE", "location": "Pune", "branch": "AI&DS", "category": "EWS", "percentile": 86.0},
+{"name": "BVP", "location": "Pune", "branch": "AI&DS", "category": "EWS", "percentile": 76.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "AI&DS", "category": "EWS", "percentile": 66.0},
+{"name": "MITAOE", "location": "Pune", "branch": "AI&DS", "category": "EWS", "percentile": 56.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "AI&DS", "category": "EWS", "percentile": 46.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "AI&DS", "category": "EWS", "percentile": 36.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "AI&DS", "category": "EWS", "percentile": 26.0},
+{"name": "RSCOE", "location": "Pune", "branch": "AI&DS", "category": "EWS", "percentile": 16.0},
+{"name": "ISB&M COE", "location": "Pune", "branch": "AI&DS", "category": "EWS", "percentile": 10.0},
+{"name": "College of Engineering Pune (COEP)", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 99.3},
+{"name": "Vishwakarma Institute of Technology (VIT)", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 91.2},
+{"name": "Pimpri Chinchwad College of Engineering (PCCOE)", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 81.0},
+{"name": "Bharati Vidyapeeth College of Engineering", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 71.0},
+{"name": "D.Y. Patil Institute of Technology", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 61.0},
+{"name": "MIT Academy of Engineering (MITAOE)", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 51.0},
+{"name": "Zeal College of Engineering", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 41.0},
+{"name": "Sinhgad Institute of Technology", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 31.0},
+{"name": "Jayawantrao Sawant College of Engineering", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 21.0},
+{"name": "ISB&M College of Engineering", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 10.0},
+{"name": "VIT", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 83.0},
+{"name": "PCCOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 73.0},
+{"name": "BVP", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 63.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 53.0},
+{"name": "MITAOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 43.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 33.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 23.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 15.0},
+{"name": "RSCOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 11.0},
+{"name": "ISB&M COE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 10.0},
+{"name": "VIT", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 79.0},
+{"name": "PCCOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 69.0},
+{"name": "BVP", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 59.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 49.0},
+{"name": "MITAOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 39.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 29.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 20.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 14.0},
+{"name": "RSCOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 10.5},
+{"name": "ISB&M COE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 10.0},
+{"name": "VIT", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 95.0},
+{"name": "PCCOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 85.0},
+{"name": "BVP", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 75.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 65.0},
+{"name": "MITAOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 55.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 45.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 35.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 25.0},
+{"name": "RSCOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 15.0},
+{"name": "ISB&M COE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 10.0},
+{"name": "VIT", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 96.0},
+{"name": "PCCOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 86.0},
+{"name": "BVP", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 76.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 66.0},
+{"name": "MITAOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 56.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 46.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 36.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 26.0},
+{"name": "RSCOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 16.0},
+{"name": "ISB&M COE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 10.0},
+
+{"name": "VIT", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 96.0},
+{"name": "PCCOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 86.0},
+{"name": "BVP", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 76.0},
+{"name": "DY Patil Institute", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 66.0},
+{"name": "MITAOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 56.0},
+{"name": "Zeal COER", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 46.0},
+{"name": "Sinhgad Institute", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 36.0},
+{"name": "Jayawantrao Sawant", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 26.0},
+{"name": "RSCOE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 16.0},
+{"name": "ISB&M COE", "location": "Pune", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 10.0},
+{"name": "Dwarkadas J. Sanghvi College of Engineering", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 93},
+{"name": "Lokmanya Tilak College of Engineering", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 82},
+{"name": "Rajiv Gandhi Institute of Technology", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 67},
+{"name": "Xavier Institute of Engineering", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 58},
+{"name": "Fr. C. Rodrigues Institute of Technology", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 50},
+{"name": "Shah & Anchor Kutchhi Engineering College", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 42},
+{"name": "Mahatma Gandhi Mission's College of Engineering", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 33},
+{"name": "K. J. Somaiya Institute of Engineering", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 84},
+{"name": "Thakur College of Engineering and Technology", "location": "Mumbai", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 15},
+{"name": "Vidyalankar Polytechnic", "location": "Mumbai", "branch": "ENTC", "category": "Electronics & Telecommunication", "percentile": 10},
+{"name": "Dwarkadas J. Sanghvi College of Engineering", "location": "Mumbai", "branch": "Information Technology", "category": "General", "percentile": 95},
+{"name": "Vidyalankar Institute of Technology", "location": "Mumbai", "branch": "Information Technology", "category": "General", "percentile": 84},
+{"name": "Datta Meghe College of Engineering", "location": "Mumbai", "branch": "Information Technology", "category": "OBC", "percentile": 74},
+{"name": "Fr. Conceicao Rodrigues College of Engineering", "location": "Mumbai", "branch": "Information Technology", "category": "SC", "percentile": 64},
+{"name": "Atharva College of Engineering", "location": "Mumbai", "branch": "Information Technology", "category": "ST", "percentile": 54},
+{"name": "Thakur College of Engineering", "location": "Mumbai", "branch": "Information Technology", "category": "EWS", "percentile": 44},
+{"name": "Universal College of Engineering", "location": "Mumbai", "branch": "Information Technology", "category": "General", "percentile": 34},
+{"name": "A. C. Patil College of Engineering", "location": "Mumbai", "branch": "Information Technology", "category": "SC", "percentile": 24},
+{"name": "Shivajirao S. Jondhale College", "location": "Mumbai", "branch": "Information Technology", "category": "OBC", "percentile": 14},
+{"name": "K.C. College of Engineering", "location": "Mumbai", "branch": "Information Technology", "category": "ST", "percentile": 10},
+{"name": "Dwarkadas J. Sanghvi College of Engineering", "location": "Mumbai", "branch": "AI&DS", "category": "General", "percentile": 94},
+{"name": "Vidyalankar Institute of Technology", "location": "Mumbai", "branch": "AI&DS", "category": "General", "percentile": 83},
+{"name": "Shah & Anchor College", "location": "Mumbai", "branch": "AI&DS", "category": "OBC", "percentile": 73},
+{"name": "Xavier Institute of Engineering", "location": "Mumbai", "branch": "AI&DS", "category": "SC", "percentile": 63},
+{"name": "Atharva College of Engineering", "location": "Mumbai", "branch": "AI&DS", "category": "ST", "percentile": 53},
+{"name": "Universal College of Engineering", "location": "Mumbai", "branch": "AI&DS", "category": "EWS", "percentile": 43},
+{"name": "A. C. Patil College of Engineering", "location": "Mumbai", "branch": "AI&DS", "category": "General", "percentile": 33},
+{"name": "K. C. College of Engineering", "location": "Mumbai", "branch": "AI&DS", "category": "SC", "percentile": 23},
+{"name": "Saraswati College of Engineering", "location": "Mumbai", "branch": "AI&DS", "category": "OBC", "percentile": 13},
+{"name": "New Horizon Institute of Technology", "location": "Mumbai", "branch": "AI&DS", "category": "ST", "percentile": 10},
+{"name": "Veermata Jijabai Technological Institute (VJTI)", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "General", "percentile": 99},
+{"name": "Dwarkadas J. Sanghvi College of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "General", "percentile": 89},
+{"name": "Fr. Conceicao Rodrigues College of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 79},
+{"name": "Datta Meghe College of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "SC", "percentile": 69},
+{"name": "Rajiv Gandhi Institute of Technology", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "ST", "percentile": 59},
+{"name": "Thakur College of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 49},
+{"name": "Universal College of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "General", "percentile": 39},
+{"name": "K. J. Somaiya Institute of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "SC", "percentile": 29},
+{"name": "Shivajirao S. Jondhale College", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 19},
+{"name": "A. C. Patil College of Engineering", "location": "Mumbai", "branch": "Mechanical Engineering", "category": "ST", "percentile": 10},
+{"name": "VJTI Mumbai", "location": "Mumbai", "branch": "Electrical Engineering", "category": "General", "percentile": 98},
+{"name": "Dwarkadas J. Sanghvi College of Engineering", "location": "Mumbai", "branch": "Electrical Engineering", "category": "General", "percentile": 88},
+{"name": "Lokmanya Tilak College of Engineering", "location": "Mumbai", "branch": "Electrical Engineering", "category": "OBC", "percentile": 78},
+{"name": "Vidyalankar Institute of Technology", "location": "Mumbai", "branch": "Electrical Engineering", "category": "SC", "percentile": 68},
+{"name": "Rajiv Gandhi Institute of Technology", "location": "Mumbai", "branch": "Electrical Engineering", "category": "ST", "percentile": 58},
+{"name": "Datta Meghe College of Engineering", "location": "Mumbai", "branch": "Electrical Engineering", "category": "EWS", "percentile": 48},
+{"name": "Shah & Anchor Kutchhi Engineering College", "location": "Mumbai", "branch": "Electrical Engineering", "category": "General", "percentile": 38},
+{"name": "A. C. Patil College of Engineering", "location": "Mumbai", "branch": "Electrical Engineering", "category": "SC", "percentile": 28},
+{"name": "New Horizon Institute of Technology", "location": "Mumbai", "branch": "Electrical Engineering", "category": "OBC", "percentile": 18},
+{"name": "K. C. College of Engineering", "location": "Mumbai", "branch": "Electrical Engineering", "category": "ST", "percentile": 10},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 72},
+{"name": "Nashik District Maratha Vidya Prasarak Samaj's Karmaveer Adv. Baburao Thakare College of Engineering", "location": "Nashik", "branch": "Mechanical", "category Engineering": "General", "percentile": 66},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 65},
+{"name": "Guru Gobind Singh College of Engineering and Research Centre", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 40},
+{"name": "Sandip Institute of Engineering and Management", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 35},
+{"name": "SNJB's Late Sau. K. B. Jain College of Engineering", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 30},
+{"name": "JSPM Narhe Technical Campus", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 25},
+{"name": "Shatabdi Institute of Engineering and Research", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 20},
+{"name": "Sandip Foundation's Sandip Institute of Technology and Research Centre", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 55},
+{"name": "Karmaveer Kakasaheb Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Mechanical Engineering", "category": "General", "percentile": 70},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Electrical Engineering", "category": "General", "percentile": 78},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Electrical Engineering", "category": "General", "percentile": 55},
+{"name": "Guru Gobind Singh College of Engineering and Research Centre", "location": "Nashik", "branch": "Electrical Engineering", "category": "General", "percentile": 50},
+{"name": "Sandip Institute of Engineering and Management", "location": "Nashik", "branch": "Electrical Engineering", "category": "General", "percentile": 45},
+{"name": "SNJB's Late Sau. K. B. Jain College of Engineering", "location": "Nashik", "branch": "Electrical Engineering", "category": "General", "percentile": 40},
+{"name": "JSPM Narhe Technical Campus", "location": "Nashik", "branch": "Electrical Engineering", "category": "General", "percentile": 35},
+{"name": "Shatabdi Institute of Engineering and Research", "location": "Nashik", "branch": "Electrical Engineering", "category": "General", "percentile": 30},
+{"name": "Sandip Foundation's Sandip Institute of Technology and Research Centre", "location": "Nashik", "branch": "Electrical Engineering", "category": "General", "percentile": 55},
+{"name": "Karmaveer Kakasaheb Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Electrical Engineering", "category": "General", "percentile": 70},
+{"name": "Nashik District Maratha Vidya Prasarak Samaj's Karmaveer Adv. Baburao Thakare College of Engineering", "location": "Nashik", "branch": "Electrical Engineering", "category": "General", "percentile": 65},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "IT", "category": "General", "percentile": 90},
+{"name": "MET Bhujbal Knowledge City", "location": "Nashik", "branch": "Information Technology", "category": "General", "percentile": 55},
+{"name": "Guru Gobind Singh College of Engineering and Research Centre", "location": "Nashik", "branch": "Information Technology", "category": "General", "percentile": 50},
+{"name": "Sandip Institute of Engineering and Management", "location": "Nashik", "branch": "Information Technology", "category": "General", "percentile": 45},
+{"name": "SNJB's Late Sau. K. B. Jain College of Engineering", "location": "Nashik", "branch": "Information Technology", "category": "General", "percentile": 40},
+{"name": "JSPM Narhe Technical Campus", "location": "Nashik", "branch": "Information Technology", "category": "General", "percentile": 35},
+{"name": "Shatabdi Institute of Engineering and Research", "location": "Nashik", "branch": "Information Technology", "category": "General", "percentile": 30},
+{"name": "Sandip Foundation's Sandip Institute of Technology and Research Centre", "location": "Nashik", "branch": "Information Technology", "category": "General", "percentile": 65},
+{"name": "Karmaveer Kakasaheb Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Information Technology", "category": "General", "percentile": 90},
+{"name": "Nashik District Maratha Vidya Prasarak Samaj's Karmaveer Adv. Baburao Thakare College of Engineering", "location": "Nashik", "branch": "Information Technology", "category": "General", "percentile": 80},
+{"name": "K.K. Wagh Institute of Engineering Education & Research", "location": "Nashik", "branch": "Information Technology", "category": "General", "percentile": 87},
+
+  {"name": "VNIT Nagpur", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 98.8},
+  {"name": "VNIT Nagpur", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 97.3},
+  {"name": "VNIT Nagpur", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 91.1},
+  {"name": "VNIT Nagpur", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 87.6},
+  {"name": "VNIT Nagpur", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 96.5},
+
+  {"name": "YCCE", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 85.2},
+  {"name": "YCCE", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 83.0},
+  {"name": "YCCE", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 75.9},
+  {"name": "YCCE", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 72.3},
+  {"name": "YCCE", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 81.6},
+
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 79.8},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 77.2},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 71.0},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 67.5},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 75.4},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 55},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 50},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 53},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 45},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 40},
+  {"name": "Shivaji Science College", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 60},
+  {"name": "Shivaji Science College", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 55},
+  {"name": "Shivaji Science College", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 57},
+  {"name": "Shivaji Science College", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 50},
+  {"name": "Shivaji Science College", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 45},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 80},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 72},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 75},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 68},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 60},
+  {"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 70},
+  {"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 62},
+  {"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 65},
+  {"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 55},
+  {"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 50},
+  {"name": "Yeshwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 75},
+  {"name": "Yeshwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 68},
+  {"name": "Yeshwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 71},
+  {"name": "Yeshwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 60},
+  {"name": "Yeshwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 55},
+  {"name": "Dr. Babasaheb Ambedkar College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 82},
+  {"name": "Dr. Babasaheb Ambedkar College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 70},
+  {"name": "Dr. Babasaheb Ambedkar College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 74},
+  {"name": "Dr. Babasaheb Ambedkar College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 65},
+  {"name": "Dr. Babasaheb Ambedkar College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 58},
+  {"name": "Central India Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 68},
+  {"name": "Central India Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 60},
+  {"name": "Central India Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 62},
+  {"name": "Central India Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 55},
+  {"name": "Central India Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 48},
+  {"name": "Anjuman College of Engineering & Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 78},
+  {"name": "Anjuman College of Engineering & Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 70},
+  {"name": "Anjuman College of Engineering & Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 73},
+  {"name": "Anjuman College of Engineering & Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 64},
+  {"name": "Anjuman College of Engineering & Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 57},
+  {"name": "Kavikulguru Institute of Technology and Science", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 77},
+  {"name": "Kavikulguru Institute of Technology and Science", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 69},
+  {"name": "Kavikulguru Institute of Technology and Science", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 72},
+  {"name": "Kavikulguru Institute of Technology and Science", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 63},
+  {"name": "Kavikulguru Institute of Technology and Science", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 56},
+  {"name": "Brahmaputra Institute of Engineering & Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 74},
+  {"name": "Brahmaputra Institute of Engineering & Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 65},
+  {"name": "Brahmaputra Institute of Engineering & Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 68},
+  {"name": "Brahmaputra Institute of Engineering & Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 59},
+  {"name": "Brahmaputra Institute of Engineering & Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 52},
+  {"name": "Yashwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 71},
+  {"name": "Yashwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 64},
+  {"name": "Yashwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 67},
+  {"name": "Yashwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 58},
+  {"name": "Yashwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 51},
+  {"name": "Maharashtra Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 85},
+  {"name": "Maharashtra Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 77},
+  {"name": "Maharashtra Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 80},
+  {"name": "Maharashtra Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 72},
+  {"name": "Maharashtra Institute of Technology", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 64},
+  {"name": "Sinhgad College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 79},
+  {"name": "Sinhgad College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 71},
+  {"name": "Sinhgad College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 74},
+  {"name": "Sinhgad College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 65},
+  {"name": "Sinhgad College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 58},
+  {"name": "Rashtrasant Tukadoji Maharaj Nagpur University", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 83},
+  {"name": "Rashtrasant Tukadoji Maharaj Nagpur University", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 75},
+  {"name": "Rashtrasant Tukadoji Maharaj Nagpur University", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 78},
+  {"name": "Rashtrasant Tukadoji Maharaj Nagpur University", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 69},
+  {"name": "Rashtrasant Tukadoji Maharaj Nagpur University", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 62},
+  {"name": "Datta Meghe College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "General", "percentile": 50},
+  {"name": "Datta Meghe College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "EWS", "percentile": 45},
+  {"name": "Datta Meghe College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "OBC", "percentile": 48},
+  {"name": "Datta Meghe College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "SC", "percentile": 42},
+  {"name": "Datta Meghe College of Engineering", "location": "Nagpur", "branch": "Mechanical Engineering", "category": "ST", "percentile": 38},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 99},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 92},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 94},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 89},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 84},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 98},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 90},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 93},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 87},
+  {"name": "G.H. Raisoni College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 82},
+  {"name": "Rashtrasant Tukadoji Maharaj Nagpur University", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 95},
+  {"name": "Rashtrasant Tukadoji Maharaj Nagpur University", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 88},
+  {"name": "Rashtrasant Tukadoji Maharaj Nagpur University", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 91},
+  {"name": "Rashtrasant Tukadoji Maharaj Nagpur University", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 85},
+  {"name": "Rashtrasant Tukadoji Maharaj Nagpur University", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 79},
+  {"name": "Maharashtra Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 97},
+  {"name": "Maharashtra Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 89},
+  {"name": "Maharashtra Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 92},
+  {"name": "Maharashtra Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 86},
+  {"name": "Maharashtra Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 80},
+  {"name": "K.D. College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 94},
+  {"name": "K.D. College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 87},
+  {"name": "K.D. College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 90},
+  {"name": "K.D. College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 83},
+  {"name": "K.D. College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 77},
+  {"name": "Yashwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 96},
+  {"name": "Yashwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 89},
+  {"name": "Yashwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 91},
+  {"name": "Yashwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 84},
+  {"name": "Yashwantrao Chavan College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 78},
+  {"name": "Anjuman College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 93},
+  {"name": "Anjuman College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 85},
+  {"name": "Anjuman College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 88},
+  {"name": "Anjuman College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 81},
+  {"name": "Anjuman College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 75},
+  {"name": "Datta Meghe College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 92},
+  {"name": "Datta Meghe College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 84},
+  {"name": "Datta Meghe College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 87},
+  {"name": "Datta Meghe College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 80},
+  {"name": "Datta Meghe College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 73},
+  {"name": "Shri Ramdeobaba College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 93},
+  {"name": "Shri Ramdeobaba College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 85},
+  {"name": "Shri Ramdeobaba College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 88},
+  {"name": "Shri Ramdeobaba College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 81},
+  {"name": "Shri Ramdeobaba College of Engineering", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 74},
+  {"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "General", "percentile": 96},
+  {"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "EWS", "percentile": 89},
+  {"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "OBC", "percentile": 91},
+  {"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "SC", "percentile": 89},
+  {"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "Electronics & Telecommunication", "category": "ST", "percentile": 88},
+  {"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Electrical Engineering", "category": "General", "percentile": 98},
+{"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Electrical Engineering", "category": "EWS", "percentile": 92},
+{"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Electrical Engineering", "category": "OBC", "percentile": 95},
+{"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Electrical Engineering", "category": "SC", "percentile": 88},
+{"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "Electrical Engineering", "category": "ST", "percentile": 81},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "General", "percentile": 97},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "EWS", "percentile": 91},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "OBC", "percentile": 94},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "SC", "percentile": 87},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "ST", "percentile": 80},
+{"name": "Shri Shivaji College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "General", "percentile": 95},
+{"name": "Shri Shivaji College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "EWS", "percentile": 89},
+{"name": "Shri Shivaji College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "OBC", "percentile": 92},
+{"name": "Shri Shivaji College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "SC", "percentile": 84},
+{"name": "Shri Shivaji College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "ST", "percentile": 76},
+{"name": "Rajiv Gandhi College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "General", "percentile": 94},
+{"name": "Rajiv Gandhi College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "EWS", "percentile": 88},
+{"name": "Rajiv Gandhi College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "OBC", "percentile": 91},
+{"name": "Rajiv Gandhi College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "SC", "percentile": 83},
+{"name": "Rajiv Gandhi College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "ST", "percentile": 75},
+{"name": "VMV College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "General", "percentile": 92},
+{"name": "VMV College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "EWS", "percentile": 85},
+{"name": "VMV College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "OBC", "percentile": 88},
+{"name": "VMV College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "SC", "percentile": 80},
+{"name": "VMV College of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "ST", "percentile": 73},
+{"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "Electrical Engineering", "category": "General", "percentile": 98},
+{"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "Electrical Engineering", "category": "EWS", "percentile": 92},
+{"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "Electrical Engineering", "category": "OBC", "percentile": 94},
+{"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "Electrical Engineering", "category": "SC", "percentile": 86},
+{"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "Electrical Engineering", "category": "ST", "percentile": 78},
+{"name": "Rama Institute of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "General", "percentile": 93},
+{"name": "Rama Institute of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "EWS", "percentile": 86},
+{"name": "Rama Institute of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "OBC", "percentile": 89},
+{"name": "Rama Institute of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "SC", "percentile": 81},
+{"name": "Rama Institute of Engineering", "location": "Nagpur", "branch": "Electrical Engineering", "category": "ST", "percentile": 74},
+{"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "AI&DS", "category": "General", "percentile": 98},
+{"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "AI&DS", "category": "EWS", "percentile": 92},
+{"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "AI&DS", "category": "OBC", "percentile": 95},
+{"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "AI&DS", "category": "SC", "percentile": 88},
+{"name": "Nagpur Institute of Technology", "location": "Nagpur", "branch": "AI&DS", "category": "ST", "percentile": 81},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "General", "percentile": 97},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "EWS", "percentile": 91},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "OBC", "percentile": 94},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "SC", "percentile": 87},
+{"name": "Priyadarshini College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "ST", "percentile": 80},
+{"name": "Shri Shivaji College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "General", "percentile": 95},
+{"name": "Shri Shivaji College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "EWS", "percentile": 89},
+{"name": "Shri Shivaji College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "OBC", "percentile": 92},
+{"name": "Shri Shivaji College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "SC", "percentile": 84},
+{"name": "Shri Shivaji College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "ST", "percentile": 76},
+{"name": "Rajiv Gandhi College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "General", "percentile": 94},
+{"name": "Rajiv Gandhi College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "EWS", "percentile": 88},
+{"name": "Rajiv Gandhi College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "OBC", "percentile": 91},
+{"name": "Rajiv Gandhi College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "SC", "percentile": 83},
+{"name": "Rajiv Gandhi College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "ST", "percentile": 75},
+{"name": "VMV College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "General", "percentile": 92},
+{"name": "VMV College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "EWS", "percentile": 85},
+{"name": "VMV College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "OBC", "percentile": 88},
+{"name": "VMV College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "SC", "percentile": 80},
+{"name": "VMV College of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "ST", "percentile": 73},
+{"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "AI&DS", "category": "General", "percentile": 98},
+{"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "AI&DS", "category": "EWS", "percentile": 92},
+{"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "AI&DS", "category": "OBC", "percentile": 94},
+{"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "AI&DS", "category": "SC", "percentile": 86},
+{"name": "Vishwakarma Institute of Technology", "location": "Nagpur", "branch": "AI&DS", "category": "ST", "percentile": 78},
+{"name": "Rama Institute of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "General", "percentile": 93},
+{"name": "Rama Institute of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "EWS", "percentile": 86},
+{"name": "Rama Institute of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "OBC", "percentile": 89},
+{"name": "Rama Institute of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "SC", "percentile": 81},
+{"name": "Rama Institute of Engineering", "location": "Nagpur", "branch": "AI&DS", "category": "ST", "percentile": 74},
+
+];
+
+function generateCollegesList() {
+      const selectedPercentile = parseInt(document.getElementById("percentile").value);
+      const location = document.getElementById("location").value;
+      const branch = document.getElementById("branch").value;
+      const category = document.getElementById("category").value;
+
+      // Filter colleges by location, branch, category, and percentile
+      const matchingColleges = collegesData.filter(college =>
+        college.location === location &&
+        college.branch === branch &&
+        college.category === category &&
+        college.percentile <= selectedPercentile // Include colleges with equal or lower percentile
+      );
+
+      // Sort the colleges in descending order based on percentile
+      matchingColleges.sort((a, b) => b.percentile - a.percentile);
+
+      const listContainer = document.getElementById("colleges-list");
+      listContainer.innerHTML = "";
+
+      if (matchingColleges.length > 0) {
+        const ul = document.createElement("ul");
+        matchingColleges.forEach(college => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong>${college.name}</strong><br>
+            Location: ${college.location}<br>
+            Branch: ${college.branch}<br>
+            Category: ${college.category}<br>
+            Required Percentile: ${college.percentile}
+          `;
+          ul.appendChild(li);
+        });
+        listContainer.appendChild(ul);
+      } else {
+        listContainer.innerHTML = "<p>No colleges found for the selected criteria.</p>";
+      }
+    }
+  </script>
+</body>
+</html>
